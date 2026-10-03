@@ -12,6 +12,12 @@ dist
 dist-ssr
 *.local
 
+# Test & verification scripts & artifacts
+test_*.js
+verify_*.js
+*.png
+!src/assets/*.png
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
