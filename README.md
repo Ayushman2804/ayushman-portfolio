@@ -1,16 +1,40 @@
-# React + Vite
+# Ayushman Banerjee: portfolio
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+Personal site for Ayushman Banerjee, Generative AI and LLM engineer. Built with React, Vite, Tailwind CSS and Framer Motion, and deployed on Vercel.
 
-Currently, two official plugins are available:
+## Run locally
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+```bash
+npm install
+npm run dev      # http://localhost:5173
+npm run build    # production build into dist/
+```
 
-## React Compiler
+## Editing content
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+All text, links and project data live in [`src/data/portfolioData.js`](src/data/portfolioData.js). Components hide anything left empty:
 
-## Expanding the Oxlint configuration
+| To add | Set |
+|---|---|
+| Profile photo | `PERSONAL_INFO.photo = '/images/ayushman.jpg'` (square, at least 800px) |
+| Project screenshot | `image: '/images/rag-qa.png'` on the project (16:10 works best) |
+| Code or demo link | `repoUrl` / `demoUrl` on the project |
+| Experience | Entries in `EXPERIENCE`; the section and its nav link appear once there is at least one |
+| Certificate link | `url` on the certification |
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+Put images in `public/images/`. Until a project has a screenshot it shows a generated placeholder tile.
+
+## Structure
+
+```
+src/
+  data/portfolioData.js     content
+  sections/                 Hero, Work, Experience, About, Skills, Contact
+  components/layout/        Navbar, Footer, Section
+  components/ui/            Button, TagList, ThemeToggle, EmbeddingTile, brand icons
+  components/ProjectCaseStudy.jsx   case study dialog
+  hooks/useTheme.js         light/dark toggle
+  index.css                 theme tokens (CSS variables) for both themes
+```
+
+Theme colors are CSS variables in `src/index.css` (`:root` for light, `.dark` for dark) and mapped to Tailwind names (`bg`, `surface`, `line`, `fg`, `muted`, `accent`) in `tailwind.config.js`. Dark is the default; a choice made with the toggle is remembered in `localStorage`.

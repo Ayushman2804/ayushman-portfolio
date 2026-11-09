@@ -1,31 +1,43 @@
 <!doctype html>
-<html lang="en" class="dark scroll-smooth">
+<html lang="en" class="dark">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#12141B" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <title>Ayushman Banerjee | Generative AI & LLM Engineer</title>
-    <meta name="description" content="Portfolio of Ayushman Banerjee, a Computer Science and Engineering student focused on Generative AI, LLMs, RAG systems, machine learning, and scalable AI applications." />
-    <meta name="keywords" content="Ayushman Banerjee, Generative AI, LLM, RAG, AI Agents, Machine Learning, Python, LangChain, FAISS, FastAPI, KIIT" />
+    <meta name="description" content="Ayushman Banerjee builds retrieval-augmented generation (RAG) systems, LLM pipelines and machine learning applications. Final-year Computer Science student at KIIT." />
     <meta name="author" content="Ayushman Banerjee" />
 
-    <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
     <meta property="og:title" content="Ayushman Banerjee | Generative AI & LLM Engineer" />
-    <meta property="og:description" content="Portfolio of Ayushman Banerjee, a Computer Science and Engineering student focused on Generative AI, LLMs, RAG systems, machine learning, and scalable AI applications." />
-    <meta property="og:site_name" content="Ayushman Banerjee Portfolio" />
-
-    <!-- Twitter -->
-    <meta name="twitter:card" content="summary_large_image" />
+    <meta property="og:description" content="RAG systems, LLM pipelines and machine learning projects by Ayushman Banerjee." />
+    <meta property="og:site_name" content="Ayushman Banerjee" />
+    <meta name="twitter:card" content="summary" />
     <meta name="twitter:title" content="Ayushman Banerjee | Generative AI & LLM Engineer" />
-    <meta name="twitter:description" content="Portfolio of Ayushman Banerjee, a Computer Science and Engineering student focused on Generative AI, LLMs, RAG systems, machine learning, and scalable AI applications." />
+    <meta name="twitter:description" content="RAG systems, LLM pipelines and machine learning projects by Ayushman Banerjee." />
 
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Apply the saved theme before first paint so there is no flash of the wrong theme. -->
+    <script>
+      (function () {
+        var theme = 'dark';
+        try {
+          var saved = localStorage.getItem('theme');
+          if (saved === 'light' || saved === 'dark') theme = saved;
+        } catch (e) {}
+        var root = document.documentElement;
+        root.classList.toggle('dark', theme === 'dark');
+        root.style.colorScheme = theme;
+        var meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) meta.setAttribute('content', theme === 'dark' ? '#12141B' : '#F4F5F8');
+      })();
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet" />
   </head>
-  <body class="bg-dark-950 text-slate-100 font-sans selection:bg-accent-cyan/20 selection:text-accent-cyan antialiased min-h-screen overflow-x-hidden">
+  <body>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
   </body>

@@ -2,100 +2,125 @@
 @tailwind components;
 @tailwind utilities;
 
+/*
+  Theme tokens. Colors are RGB triplets so Tailwind can apply opacity,
+  e.g. bg-accent/15. Light is the base; .dark overrides it.
+*/
 @layer base {
+  :root {
+    --c-bg: 244 245 248;      /* #F4F5F8 cool paper */
+    --c-surface: 255 255 255; /* #FFFFFF */
+    --c-line: 218 221 229;    /* #DADDE5 */
+    --c-fg: 21 24 33;         /* #151821 */
+    --c-muted: 86 93 110;     /* #565D6E */
+    --c-accent: 48 68 196;    /* #3044C4 */
+    color-scheme: light;
+  }
+
+  .dark {
+    --c-bg: 18 20 27;         /* #12141B ink */
+    --c-surface: 26 29 38;    /* #1A1D26 */
+    --c-line: 44 48 60;       /* #2C303C */
+    --c-fg: 231 233 239;      /* #E7E9EF */
+    --c-muted: 156 163 180;   /* #9CA3B4 */
+    --c-accent: 147 168 255;  /* #93A8FF periwinkle */
+    color-scheme: dark;
+  }
+
   html {
     scroll-behavior: smooth;
-    color-scheme: dark;
-    overflow-y: auto !important;
+    -webkit-text-size-adjust: 100%;
   }
-  
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+
   body {
-    background-color: #05070a;
-    color: #e2e8f0;
+    @apply bg-bg font-sans text-base text-fg antialiased;
+    line-height: 1.6;
     overflow-x: hidden;
-    overflow-y: auto !important;
   }
 
-  /* Custom visible subtle scrollbar */
-  ::-webkit-scrollbar {
-    width: 8px;
+  ::selection {
+    background: rgb(var(--c-accent) / 0.25);
   }
-  ::-webkit-scrollbar-track {
-    background: #080a10;
-  }
-  ::-webkit-scrollbar-thumb {
-    background: #1e2638;
+
+  :focus-visible {
+    outline: 2px solid rgb(var(--c-accent));
+    outline-offset: 3px;
     border-radius: 4px;
-    border: 2px solid #080a10;
   }
-  ::-webkit-scrollbar-thumb:hover {
-    background: #38bdf8;
+
+  /* Anchored sections and projects land below the sticky navbar. */
+  [id] {
+    scroll-margin-top: 5.5rem;
   }
 }
 
-/* Framer-style background grid & ambient light */
-.bg-grid-pattern {
-  background-size: 32px 32px;
-  background-image: 
-    linear-gradient(to right, rgba(255, 255, 255, 0.035) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+@layer components {
+  .container-page {
+    @apply mx-auto w-full max-w-5xl px-5 sm:px-8;
+  }
+
+  .link {
+    @apply underline decoration-line decoration-1 underline-offset-4 transition-colors hover:text-accent hover:decoration-accent;
+  }
+
+  /* Citation marker, as in a RAG answer that cites its sources. */
+  .cite {
+    @apply ml-0.5 inline-flex -translate-y-px items-center rounded bg-accent/15 px-1 align-baseline font-mono text-meta font-medium text-accent no-underline transition-colors hover:bg-accent hover:text-bg;
+  }
 }
 
-.bg-dot-pattern {
-  background-image: radial-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px);
-  background-size: 24px 24px;
+/* A project reached through a citation briefly highlights, like a retrieved passage. */
+@keyframes retrieved {
+  0%,
+  35% {
+    background-color: rgb(var(--c-accent) / 0.1);
+    box-shadow: 0 0 0 12px rgb(var(--c-accent) / 0.1);
+  }
+  100% {
+    background-color: transparent;
+    box-shadow: 0 0 0 12px transparent;
+  }
 }
 
-.glass-panel {
-  background: rgba(13, 17, 26, 0.7);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+.project:target {
+  border-radius: 12px;
+  animation: retrieved 1.8s ease-out;
 }
 
-.glass-panel-hover {
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+/* Case study dialog */
+dialog.case-study::backdrop {
+  background: rgb(0 0 0 / 0.55);
+  backdrop-filter: blur(2px);
 }
 
-.glass-panel-hover:hover {
-  background: rgba(19, 24, 38, 0.85);
-  border-color: rgba(56, 189, 248, 0.25);
-  box-shadow: 0 12px 36px -10px rgba(56, 189, 248, 0.12);
-  transform: translateY(-2px);
+dialog.case-study[open] {
+  animation: dialog-in 180ms ease-out;
 }
 
-.gradient-text {
-  background: linear-gradient(135deg, #ffffff 30%, #94a3b8 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+dialog.case-study:focus-visible {
+  outline: none;
 }
 
-.gradient-accent {
-  background: linear-gradient(135deg, #38bdf8 0%, #818cf8 50%, #c084fc 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+@keyframes dialog-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
 }
 
-.badge-glow {
-  box-shadow: 0 0 20px -3px rgba(56, 189, 248, 0.25);
-}
-
-.ambient-glow-cyan {
-  position: absolute;
-  width: 500px;
-  height: 500px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(56, 189, 248, 0.12) 0%, rgba(56, 189, 248, 0) 70%);
-  filter: blur(40px);
-  pointer-events: none;
-}
-
-.ambient-glow-purple {
-  position: absolute;
-  width: 500px;
-  height: 500px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(168, 85, 247, 0.12) 0%, rgba(168, 85, 247, 0) 70%);
-  filter: blur(40px);
-  pointer-events: none;
+@media (prefers-reduced-motion: reduce) {
+  .project:target,
+  dialog.case-study[open] {
+    animation: none;
+  }
 }

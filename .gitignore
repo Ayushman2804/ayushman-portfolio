@@ -17,6 +17,7 @@ test_*.js
 verify_*.js
 *.png
 !src/assets/*.png
+!public/images/*.png
 
 # Editor directories and files
 .vscode/*
